@@ -1,0 +1,4 @@
+db: mongo
+mongo:
+    database: transitdb
+    uri: mongodb://localhost:27017
