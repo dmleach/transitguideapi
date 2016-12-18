@@ -1,8 +1,8 @@
 <?php
 
-namespace transitguide\api\controller\db\base;
+namespace transitguide\api\model\base;
 
-abstract class MongoController
+abstract class MongoModel
 {
     protected $databaseName;
 
