@@ -70,6 +70,28 @@ abstract class MongoModel
     //
     // }
 
+    public function list()
+    {
+        $query = new \MongoDB\Driver\Query([], []);
+        $cursor = $this->manager->executeQuery($this->getCollectionName(), $query);
+        $rows = $cursor->toArray();
+        $result = [];
+
+        foreach ($rows as $row) {
+            $indexFields = [];
+
+            foreach ($row as $field => $value) {
+                if (in_array($field, $this->getIndexFields())) {
+                    $indexFields[$field] = $value;
+                }
+            }
+
+            $result[] = $indexFields;
+        }
+
+        return $result;
+    }
+
     public function upsert($rows)
     {
         // Create a bulk write object, even if only one document is being written
