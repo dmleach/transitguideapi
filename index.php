@@ -10,8 +10,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $action = array_key_exists('action', $_GET) ? $_GET['action'] : null;
 
 // Load the routing configuration file
-// TO-DO: MAKE THIS CONFIGURABLE
 $frontController = new controller\FrontController();
+// TO-DO: MAKE THIS CONFIGURABLE
 $frontController->loadRoutes(__DIR__ . '/routing.yml');
 
 // Instantiate the configured controller for the requested action
@@ -21,3 +21,6 @@ $actionController = $frontController->getController($action);
 if ($actionController === false) {
     echo "I could not find a controller for action {$action}";
 }
+
+// Execute the controller's action
+$actionController->execute();
