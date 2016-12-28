@@ -12,12 +12,13 @@ $frontController->setConfigFilePath(__DIR__ . '/config.yml');
 // TO-DO: MAKE THIS CONFIGURABLE
 $frontController->loadRoutes(__DIR__ . '/routing.yml');
 
-// Get the requested action, which is provided via the rewrite rule in htaccess:
-// RewriteRule ^(.*)$ index.php?action=$1 [QSA,L]
-$action = array_key_exists('action', $_GET) ? $_GET['action'] : null;
+// Get the query string, which includes the requested action, provided via the
+// rewrite rule in htaccess: RewriteRule ^(.*)$ index.php?action=$1 [QSA,L]
+// echo '<pre>' . print_r($_SERVER, true) . '</pre>';
+$queryString = array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : null;
 
-// Parse the action into a subject and verb
-$frontController->parseAction($action, $subject, $verb);
+// Parse the query string
+$frontController->parseQueryString($queryString, $subject, $verb, $parameters);
 
 // Instantiate the configured controller for the requested subject
 $actionController = $frontController->getController($subject);
@@ -28,4 +29,4 @@ if ($actionController === false) {
 }
 
 // Execute the controller's verb method
-$actionController->$verb();
+$actionController->$verb($parameters);

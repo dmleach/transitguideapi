@@ -40,32 +40,37 @@ class FrontController
         }
     }
 
-    public function parseAction($action, &$subject, &$verb)
+    public function parseQueryString($queryString, &$subject, &$verb, &$parameters)
     {
         $subject = '';
 
-        // By default, requests are assumed to be GETs
-        $verb = 'get';
 
-        // The subject of the action is the first section of the action string, from
-        // the beginning to the first slash
-        $firstSlashPos = strpos($action, '/');
+        parse_str($queryString, $arguments);
+        echo '<pre>' . print_r($arguments, true) . '</pre>';
 
-        if ($firstSlashPos === false) {
-            $subject = $action;
-        } else {
-            $subject = substr($action, 0, $firstSlashPos);
+        if (array_key_exists('action', $arguments)) {
+            // The subject of the action is the first section of the string,
+            // from the beginning to the slash
+            $slashPos = strpos($arguments['action'], '/');
 
-            // The verb of the action is the second section of the action string, from
-            // the first slash to the second
-            $secondSlashPos = strpos($action, '/', $firstSlashPos + 1);
-
-            if ($secondSlashPos === false) {
-                $verb = substr($action, $firstSlashPos + 1);
+            if ($slashPos === false) {
+                $subject = $arguments['action'];
             } else {
-                $verb = substr($action, $firstSlashPos + 1, $secondSlashPos - $firstSlashPos - 1);
+                $subject = substr($arguments['action'], 0, $slashPos);
+
+                // The verb of the action is the second section of the action
+                // string, from the slash to the end
+                $verb = substr($arguments['action'], $slashPos + 1);
             }
         }
+
+        // By default, requests are assumed to be GETs
+        if ($verb == '') {
+            $verb = 'get';
+        }
+
+        $parameters = $arguments;
+        unset($parameters['action']);
     }
 
     public function setConfigFilePath(string $filepath)
