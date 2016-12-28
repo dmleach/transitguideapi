@@ -2,11 +2,22 @@
 
 namespace transitguide\api\controller;
 
-class HelloController implements ActionController
+class HelloController extends ActionController
 {
     public function execute()
     {
+        $this->outputGreeting();
+    }
+
+    public function get($request)
+    {
+        $this->outputGreeting();
+    }
+
+    public function outputGreeting()
+    {
         // TO-DO: Output a list of available endpoints
-        echo "Hello! I'm HelloController. I say Hello!";
+        // TO-DO: Manage output using a view class
+        echo "<p>Hello! I'm HelloController. I say hello!</p>";
     }
 }
