@@ -92,6 +92,14 @@ abstract class MongoModel
         return $result;
     }
 
+    public function select($criteria)
+    {
+        // TO-DO: Add a collation value to make this case insensitive
+        $query = new \MongoDB\Driver\Query($criteria, []);
+        $cursor = $this->manager->executeQuery($this->getCollectionName(), $query);
+        return $cursor->toArray();
+    }
+
     public function upsert($rows)
     {
         // Create a bulk write object, even if only one document is being written

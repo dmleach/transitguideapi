@@ -29,4 +29,6 @@ if ($actionController === false) {
 }
 
 // Execute the controller's verb method
-$actionController->$verb($parameters);
+$actionResult = $actionController->$verb($parameters);
+
+echo '<pre>' . print_r($actionResult, true) . '</pre>';

@@ -46,7 +46,7 @@ class FrontController
 
 
         parse_str($queryString, $arguments);
-        echo '<pre>' . print_r($arguments, true) . '</pre>';
+        // echo '<pre>' . print_r($arguments, true) . '</pre>';
 
         if (array_key_exists('action', $arguments)) {
             // The subject of the action is the first section of the string,

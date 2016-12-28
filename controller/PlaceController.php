@@ -6,9 +6,10 @@ class PlaceController extends base\DataActionController
 {
     public function get($parameters)
     {
-        // return $this->model->list();
-        echo "<p>This is PlaceController::get</p>";
-        echo '<pre>' . print_r($parameters, true) . '</pre>';
+        // echo "<p>This is PlaceController::get</p>";
+        // echo '<pre>' . print_r($parameters, true) . '</pre>';
+
+        return $this->model->select($parameters);
     }
 
     public function getModelClassName(): string
