@@ -2,7 +2,7 @@
 
 namespace transitguide\api\controller;
 
-class HelloController extends ActionController
+class HelloController extends base\ActionController
 {
     public function execute()
     {
