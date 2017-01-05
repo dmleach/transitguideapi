@@ -36,7 +36,7 @@ class FrontController
                 $this->paths[$path] = $config;
             }
         } else {
-            throw new Exception("Cannot find routing file at {$filepath}");
+            throw new \Exception("Cannot find routing file at {$filepath}");
         }
     }
 
@@ -76,7 +76,7 @@ class FrontController
     public function setConfigFilePath(string $filepath)
     {
         if (!file_exists($filepath)) {
-            throw new Exception("Cannot find config file at {$filepath}");
+            throw new \Exception("Cannot find config file at {$filepath}");
         }
 
         $this->configController = new db\ConfigController($filepath);
