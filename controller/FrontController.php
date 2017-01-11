@@ -2,10 +2,30 @@
 
 namespace transitguide\api\controller;
 
+use \transitguide\api\exception\controller\FrontControllerException as FrontControllerException;
+
 class FrontController
 {
+    const CONFIG_KEY_CONTROLLER = 'controller';
+
     protected $configController = null;
     protected $paths;
+
+    public function addPath(string $path, array $config): bool
+    {
+        // Check to see if the given path already exists
+        if ($this->getControllerName($path) !== false) {
+            return false;
+        }
+
+        // Check to see that the given config array contains a controller key
+        if (!array_key_exists(self::CONFIG_KEY_CONTROLLER, $config)) {
+            return false;
+        }
+
+        $this->paths[$path] = $config;
+        return true;
+    }
 
     public function getController($path)
     {
@@ -20,11 +40,15 @@ class FrontController
 
     public function getControllerName($path)
     {
-        if (array_key_exists($path, $this->paths)) {
-            return $this->paths[$path]['controller'];
-        } else {
+        if (!is_array($this->paths)) {
             return false;
         }
+
+        if (!array_key_exists($path, $this->paths)) {
+            return false;
+        }
+
+        return $this->paths[$path]['controller'];
     }
 
     public function loadRoutes($filepath)
@@ -33,7 +57,7 @@ class FrontController
             $routingConfig = new \Noodlehaus\Config($filepath);
 
             foreach ($routingConfig as $path => $config) {
-                $this->paths[$path] = $config;
+                $this->addPath($path, $config);
             }
         } else {
             throw new \Exception("Cannot find routing file at {$filepath}");
@@ -44,9 +68,7 @@ class FrontController
     {
         $subject = '';
 
-
         parse_str($queryString, $arguments);
-        // echo '<pre>' . print_r($arguments, true) . '</pre>';
 
         if (array_key_exists('action', $arguments)) {
             // The subject of the action is the first section of the string,
