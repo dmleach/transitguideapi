@@ -36,7 +36,6 @@ class FrontControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers FrontController::addPath
      * @dataProvider provide_addPath
      */
     public function test_addPath(string $path, array $config, bool $expectedResult)
@@ -88,7 +87,6 @@ class FrontControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers FrontController::getControllerName
      * @dataProvider provide_getControllerName
      */
     public function test_getControllerName($paths, string $testPath, $expectedResult)
