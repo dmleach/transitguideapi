@@ -2,8 +2,6 @@
 
 namespace transitguide\api\controller;
 
-use \transitguide\api\exception\controller\FrontControllerException as FrontControllerException;
-
 class FrontController
 {
     const CONFIG_KEY_CONTROLLER = 'controller';
