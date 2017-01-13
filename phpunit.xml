@@ -1,0 +1,19 @@
+<phpunit bootstrap="test/bootstrap.php">
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory>.</directory>
+            <exclude>
+                <directory>test</directory>
+                <directory>vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-text" target="php://stdout"/>
+    </logging>
+    <testsuites>
+        <testsuite name="Complete Test Suite">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
